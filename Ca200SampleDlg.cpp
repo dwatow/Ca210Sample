@@ -9,7 +9,7 @@
 #include "Const.h"
 
 //CA-SDK
-#import "C:\Program Files\CA-SDK\SDK\CA200Srvr.dll" no_namespace implementation_only
+//#import "C:\Program Files\CA-SDK\SDK\CA200Srvr.dll" no_namespace implementation_only
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -149,64 +149,66 @@ BOOL CCa200SampleDlg::OnInitDialog()
 	
    
 	//CA-SDK
-    long lcan = 1;              //CA儀器CA號碼=1
-	_bstr_t strcnfig(_T("1"));  //探測器：連結1組，號碼=1
-    long lprt = PORT_USB;       //lprt   USB連結
-    long lbr  = 38400;
-    _bstr_t strprbid(_T("P1"));
-    _variant_t vprbid(_T("P1"));
-
-    try
-	{
-        m_pCa200Obj = ICa200Ptr(__uuidof(Ca200));//1.建立Ca200物件（1）
-        m_pCa200Obj->SetConfiguration(lcan, strcnfig, lprt, lbr);
-		//2.使用SetConfiguration() method,設定程式使用一台CA儀器如（2）
-		//括號設定的，如上述宣告的部份
-    }
-    catch(_com_error e)
-	{
-        CString strerr;
-		strerr.Format(_T("HR:0x%08x\nMSG:%s"), e.Error(), (LPCSTR)e.Description());
-        AfxMessageBox((LPCSTR)strerr);
-		return TRUE;
-    }
-//3.用CA-SDK物件的方式  設定物件來控制CA儀器（儀控）
-
-    m_pCasObj               = m_pCa200Obj  ->  Cas;                 //從Ca200物件，取得Cas集合。
-    m_pCaObj                = m_pCasObj    ->  ItemOfNumber[lcan];  //從Cas物件中取得Ca物件。
-    m_pOutputProbesObj      = m_pCaObj     ->  OutputProbes;        //從Ca物件取得Outprobes集合。
-    m_pOutputProbesObj ->  RemoveAll();                             //Reset OutProbes 集合。
-    m_pOutputProbesObj ->  Add(strprbid);                           //增加探測器 #1 OutProbes 集合並且設定它如同輸出探測器。
-    m_pProbeObj             = m_pOutputProbesObj ->Item[vprbid];    //從OutputProbes集合，取得 Probe物件。
-    m_pMemoryObj            = m_pCaObj->Memory;                     //從Ca物件取得Memory物件。
-
-//4.使用various物件表現下列CA儀器初始化和記憶Channel設定：
-    m_pCaObj->SyncMode      = SYNC_UNIV;  //設定NTSC同步模式
-    m_pCaObj->AveragingMode = AVRG_FAST;  //設定FAST/SLOW模式到FAST
-    m_pCaObj->SetAnalogRange(2.5, 2.5);   //設定類比顯示範圍2.5%,2.5%
-    m_pCaObj->DisplayMode   = DSP_LXY;    //設定輸出顯示為Lvxy
-    m_pCaObj->DisplayDigits = DIGT_4;     //設定顯示數位數字為4
-    m_pMemoryObj->ChannelNO = 61;          //設定記憶Channel到0（原廠校準）
-
-	// END CA-SDK
-
-	//CA-SDK about Sink Object
-	//1.建立sink物件（沒有標示）
-	m_dwCk = 0;
-	CCaEvent* pevntobj;
-	if (NULL != (pevntobj = new CCaEvent)){ //{bmc circle1.bmp}
-
-		m_pIDispatch = pevntobj ->GetIDispatch(FALSE);//2.獲得sink介面的物件
-		
-		IConnectionPointContainerPtr pcpcobj;
-		DWORD dwck;
-		
-		pcpcobj = m_pCaObj;//3.
-		pcpcobj -> FindConnectionPoint(IID_ICaEvent, &m_pIConnectionPointObj);//4.找sink介面的物件（IConnectionPoint interface connection point）
-		m_pIConnectionPointObj ->Advise(m_pIDispatch, &dwck);//5.增加物件的連結
-		m_dwCk = dwck;//6.儲存最新連線的ID
-	}
-
+//     long lcan = 1;              //CA儀器CA號碼=1
+// 	_bstr_t strcnfig(_T("1"));  //探測器：連結1組，號碼=1
+//     long lprt = PORT_USB;       //lprt   USB連結
+//     long lbr  = 38400;
+//     _bstr_t strprbid(_T("P1"));
+//     _variant_t vprbid(_T("P1"));
+// 
+//     try
+// 	{
+//         m_pCa200Obj = ICa200Ptr(__uuidof(Ca200));//1.建立Ca200物件（1）
+//         m_pCa200Obj->SetConfiguration(lcan, strcnfig, lprt, lbr);
+// 		//2.使用SetConfiguration() method,設定程式使用一台CA儀器如（2）
+// 		//括號設定的，如上述宣告的部份
+//     }
+//     catch(_com_error e)
+// 	{
+//         CString strerr;
+// 		strerr.Format(_T("HR:0x%08x\nMSG:%s"), e.Error(), (LPCSTR)e.Description());
+//         AfxMessageBox((LPCSTR)strerr);
+// 		return TRUE;
+//     }
+// //3.用CA-SDK物件的方式  設定物件來控制CA儀器（儀控）
+// 
+//     m_pCasObj               = m_pCa200Obj  ->  Cas;                 //從Ca200物件，取得Cas集合。
+//     m_pCaObj                = m_pCasObj    ->  ItemOfNumber[lcan];  //從Cas物件中取得Ca物件。
+//     m_pOutputProbesObj      = m_pCaObj     ->  OutputProbes;        //從Ca物件取得Outprobes集合。
+//     m_pOutputProbesObj ->  RemoveAll();                             //Reset OutProbes 集合。
+//     m_pOutputProbesObj ->  Add(strprbid);                           //增加探測器 #1 OutProbes 集合並且設定它如同輸出探測器。
+//     m_pProbeObj             = m_pOutputProbesObj ->Item[vprbid];    //從OutputProbes集合，取得 Probe物件。
+//     m_pMemoryObj            = m_pCaObj->Memory;                     //從Ca物件取得Memory物件。
+// 
+// //4.使用various物件表現下列CA儀器初始化和記憶Channel設定：
+//     m_pCaObj->SyncMode      = SYNC_UNIV;  //設定NTSC同步模式
+//     m_pCaObj->AveragingMode = AVRG_FAST;  //設定FAST/SLOW模式到FAST
+//     m_pCaObj->SetAnalogRange(2.5, 2.5);   //設定類比顯示範圍2.5%,2.5%
+//     m_pCaObj->DisplayMode   = DSP_LXY;    //設定輸出顯示為Lvxy
+//     m_pCaObj->DisplayDigits = DIGT_4;     //設定顯示數位數字為4
+//     m_pMemoryObj->ChannelNO = 61;          //設定記憶Channel到0（原廠校準）
+// 
+// 	// END CA-SDK
+// 
+// 	//CA-SDK about Sink Object
+// 	//1.建立sink物件（沒有標示）
+// 	m_dwCk = 0;
+// 	CCaEvent* pevntobj;
+// 	if (NULL != (pevntobj = new CCaEvent)){ //{bmc circle1.bmp}
+// 
+// 		m_pIDispatch = pevntobj ->GetIDispatch(FALSE);//2.獲得sink介面的物件
+// 		
+// 		IConnectionPointContainerPtr pcpcobj;
+// 		DWORD dwck;
+// 		
+// 		pcpcobj = m_pCaObj;//3.
+// 		pcpcobj -> FindConnectionPoint(IID_ICaEvent, &m_pIConnectionPointObj);//4.找sink介面的物件（IConnectionPoint interface connection point）
+// 		m_pIConnectionPointObj ->Advise(m_pIDispatch, &dwck);//5.增加物件的連結
+// 		m_dwCk = dwck;//6.儲存最新連線的ID
+// 	}
+	m_pCa210 = new Ca210(FALSE);
+	m_pCa210->SetOnline(TRUE);
+	
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -277,11 +279,11 @@ void CCa200SampleDlg::OnOK()
 	//	CDialog::OnOK();
 	//CA-SDK
 	{
-		if (m_dwCk != 0)
-			m_pIConnectionPointObj ->  Unadvise(m_dwCk);//1.CA-SDK的終端連線
-		    m_pIDispatch           ->  Release();       //2.在Sample軟體的sink物件執行Release()。當它準備好，sink物件會使自己失效。
-                                                        //  靠sample軟體的處理CA-SDK物件hold住smart指標，必須靠著自動化自我失效
-		    m_pCaObj               ->  RemoteMode = 0;  //3.設定Ca物件的RemoteMode屬性到OFF並且取消CA儀器的遠端模式
+// 		if (m_dwCk != 0)
+// 			m_pIConnectionPointObj ->  Unadvise(m_dwCk);//1.CA-SDK的終端連線
+// 		    m_pIDispatch           ->  Release();       //2.在Sample軟體的sink物件執行Release()。當它準備好，sink物件會使自己失效。
+//                                                         //  靠sample軟體的處理CA-SDK物件hold住smart指標，必須靠著自動化自我失效
+// 		    m_pCaObj               ->  RemoteMode = 0;  //3.設定Ca物件的RemoteMode屬性到OFF並且取消CA儀器的遠端模式
 		CDialog::OnOK();
 	}
 }
@@ -302,7 +304,7 @@ BOOL CCa200SampleDlg::CanExit()
 		ShowWindow(SW_HIDE);
 		return FALSE;
 	}
-
+	delete m_pCa210;
 	return TRUE;
 }
 
@@ -311,29 +313,38 @@ void CCa200SampleDlg::OnButtonMsr()
 	// TODO: Add your control notification handler code here
 	
 	//量測的部份
+
 	// CA-SDK
-	int i;
-	float fLv;
-	float fx;
-	float fy;
-	long  lT;
-	float fduv;
-	
+ 	int i;
+// 	float fLv;
+// 	float fx;
+// 	float fy;
+// 	long  lT;
+// 	float fduv;
+	Bullet* Data = new Bullet;
 	for (i = 0; i < 10; i++)
 	{
-		m_pCaObj->Measure(0);//1.Ca物件的Measure法被呼叫，並且準備好量測
+		//m_pCaObj->Measure(0);//1.Ca物件的Measure法被呼叫，並且準備好量測
+		m_pCa210->Measure();
+		Data = &m_pCa210->GetMsrData();
 
-		fLv  = m_pProbeObj ->Lv;//2.Probe物件原型和顯示量測結果的DDX成員相關設定 得到的量測結果和最後反映都在控制。
-		fx   = m_pProbeObj ->sx;
-		fy   = m_pProbeObj ->sy;
-		lT   = m_pProbeObj ->T;
-		fduv = m_pProbeObj ->duv;
+// 		fLv  = m_pProbeObj ->Lv;//2.Probe物件原型和顯示量測結果的DDX成員相關設定 得到的量測結果和最後反映都在控制。
+// 		fx   = m_pProbeObj ->sx;
+// 		fy   = m_pProbeObj ->sy;
+// 		lT   = m_pProbeObj ->T;
+// 		fduv = m_pProbeObj ->duv;
+// 
+// 		m_strLv.Format ("%4.2f",fLv);
+// 		m_strx.Format  ("%1.4f",fx);
+// 		m_stry.Format  ("%1.4f",fy);
+// 		m_strT.Format  ("%4d"  ,lT);
+// 		m_strduv.Format("%1.4f",fduv);
 
-		m_strLv.Format ("%4.2f",fLv);
-		m_strx.Format  ("%1.4f",fx);
-		m_stry.Format  ("%1.4f",fy);
-		m_strT.Format  ("%4d"  ,lT);
-		m_strduv.Format("%1.4f",fduv);
+		m_strLv.Format ("%4.2f",Data->GetLv());
+		m_strx.Format  ("%1.4f",Data->GetSx());
+		m_stry.Format  ("%1.4f",Data->GetSy());
+		m_strT.Format  ("%4d"  ,Data->GetT());
+		m_strduv.Format("%1.4f",Data->GetDuv());
 
 		UpdateData(FALSE);
 	}	
@@ -346,17 +357,18 @@ void CCa200SampleDlg::OnButtonCal0()
 	
 	//0-Cal的部份
 	// CA-SDK
-	try
-	{
-		m_pCaObj->CalZero();//1.Ca物件的CalZero method被呼叫，且執行0-Cal
-	}
-	catch(_com_error e)
-	{
-		CString strerr;
-		strerr.Format(_T("HR:0x%08x\nMSG:%s"), e.Error(), (LPCSTR)e.Description());
-		AfxMessageBox((LPCSTR)strerr);
-		return;
-	}
+// 	try
+// 	{
+// 		m_pCaObj->CalZero();//1.Ca物件的CalZero method被呼叫，且執行0-Cal
+// 	}
+// 	catch(_com_error e)
+// 	{
+// 		CString strerr;
+// 		strerr.Format(_T("HR:0x%08x\nMSG:%s"), e.Error(), (LPCSTR)e.Description());
+// 		AfxMessageBox((LPCSTR)strerr);
+// 		return;
+// 	}
+	m_pCa210->CalZero();
 	CButton* pb;
 	pb = (CButton *)GetDlgItem(IDC_BUTTON_MSR);
 	pb->EnableWindow(TRUE);

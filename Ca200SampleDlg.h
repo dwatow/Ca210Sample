@@ -6,13 +6,13 @@
 
 
 //CA-SDK
-#import "C:\Program Files\CA-SDK\SDK\CA200Srvr.dll" no_namespace no_implementation
+//#import "C:\Program Files\CA-SDK\SDK\CA200Srvr.dll" no_namespace no_implementation
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-
 class CCa200SampleDlgAutoProxy;
+#include "CA210.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CCa200SampleDlg dialog
@@ -24,17 +24,19 @@ class CCa200SampleDlg : public CDialog
 
 // Construction
 public:
-	DWORD               m_dwCk;
-	IDispatch*          m_pIDispatch;
-	IConnectionPointPtr m_pIConnectionPointObj;
+// 	DWORD               m_dwCk;
+// 	IDispatch*          m_pIDispatch;
+// 	IConnectionPointPtr m_pIConnectionPointObj;
 
-	IOutputProbesPtr    m_pOutputProbesObj;
-	IProbesPtr          m_pProbesObj;
-	ICasPtr             m_pCasObj;
-	IMemoryPtr          m_pMemoryObj;
-	IProbePtr           m_pProbeObj;
-	ICaPtr              m_pCaObj;
-	ICa200Ptr           m_pCa200Obj;
+// 	IOutputProbesPtr    m_pOutputProbesObj;
+// 	IProbesPtr          m_pProbesObj;
+// 	ICasPtr             m_pCasObj;
+// 	IMemoryPtr          m_pMemoryObj;
+// 	IProbePtr           m_pProbeObj;
+// 	ICaPtr              m_pCaObj;
+// 	ICa200Ptr           m_pCa200Obj;
+
+	Ca210* m_pCa210;
 	CCa200SampleDlg(CWnd* pParent = NULL);	// standard constructor
 	virtual ~CCa200SampleDlg();
 

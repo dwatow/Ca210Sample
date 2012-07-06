@@ -92,11 +92,11 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Ca200Sample.cpp
+SOURCE=.\Bullet.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Ca200Sample.odl
+SOURCE=.\Ca200Sample.cpp
 # End Source File
 # Begin Source File
 
@@ -108,7 +108,11 @@ SOURCE=.\Ca200SampleDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CaEvent.cpp
+SOURCE=.\ca200srvr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CA210.cpp
 # End Source File
 # Begin Source File
 
@@ -125,6 +129,10 @@ SOURCE=.\StdAfx.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Bullet.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Ca200Sample.h
 # End Source File
 # Begin Source File
@@ -133,11 +141,11 @@ SOURCE=.\Ca200SampleDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CaEvent.h
+SOURCE=.\ca200srvr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Const.h
+SOURCE=.\CA210.h
 # End Source File
 # Begin Source File
 
