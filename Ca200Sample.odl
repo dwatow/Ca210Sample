@@ -1,0 +1,82 @@
+// Ca200Sample.odl : type library source for Ca200Sample.exe
+
+// This file will be processed by the MIDL compiler to produce the
+// type library (Ca200Sample.tlb).
+
+[ uuid(29D2A906-4565-41E4-9D5E-5134104B2AE6), version(1.0) ]
+library Ca200SRVRLib
+//library Ca200Sample
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+
+	//  Primary dispatch interface for CCa200SampleDoc
+	
+	[ uuid(62E8CDC5-8F2A-4374-A788-627B4E0D4721) ]
+	dispinterface ICa200Sample
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CCa200SampleDlgAutoProxy)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CCa200SampleDlgAutoProxy)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CCa200SampleDoc
+	
+	[ uuid(E440C772-86A9-4D98-B2DE-C54ADD2FC821) ]
+	coclass Ca200Sample
+	{
+		[default] dispinterface ICa200Sample;
+	};
+
+
+	//  Primary dispatch interface for CCaEvent
+	
+    //[ uuid(0E058377-850A-4490-9A69-87B9EE9B4BBB) ]	//原本的
+	//CA-SDK
+	[uuid(f7663750-5900-45eb-905f-78c5d5378481) ]       //改上去的
+/*
+CCaEvent增加自動化方法
+‧ External name: ExeCalZero()
+‧ Return value: void
+*/
+
+	//END CA-SDK
+
+	dispinterface ICaEvent
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CCaEvent)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CCaEvent)
+			[id(1)] void ExeCalZero();
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CCaEvent
+
+	[ uuid(B040692F-AAD5-488E-8479-CCBD6BD39CFD) ]
+	coclass CaEvent
+	{
+		[default] dispinterface ICaEvent;
+	};
+
+	//{{AFX_APPEND_ODL}}
+	//}}AFX_APPEND_ODL}}
+};
